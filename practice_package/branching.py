@@ -1,37 +1,62 @@
-# Задача 1 - T
-# Функция: is_weekend(day)
-# Определяет, является ли день выходным (суббота или воскресенье).
-is_weekend = lambda day: day == 6 or day == 7
+def is_weekend(day):
+    return day in [6, 7]
 
-# Задача 2 - T
-# Функция: get_discount(amount)
-# Возвращает размер скидки в зависимости от суммы покупки.
-get_discount = lambda amount: amount * 0.10 if amount >= 5000 else (amount * 0.05 if amount >= 1000 else 0)
 
-# Задача 3
-# Функция: describe_number(n)
-# Возвращает строку-описание числа (четность и разрядность).
-describe_number = lambda n: f"{'четное' if n % 2 == 0 else 'нечетное'} " + (
-    "однозначное число" if 1 <= n <= 9 else (
-        "двузначное число" if 10 <= n <= 99 else "трехзначное число"
-    )
-)
+def get_discount(amount):
+    if amount >= 5000:
+        return round(amount * 0.1, 2)
+    elif amount >= 1000:
+        return round(amount * 0.05, 2)
+    return 0.0
 
-# Задача 4 - T
-# Функция: convert_to_meters(unitNumber, lengthInUnits)
-# Конвертирует длину в указанных единицах в метры.
-convert_to_meters = lambda unitNumber, lengthInUnits: (
-    lengthInUnits * 0.1 if unitNumber == 1 else
-    (lengthInUnits * 1000 if unitNumber == 2 else
-     (lengthInUnits if unitNumber == 3 else
-      (lengthInUnits * 0.001 if unitNumber == 4 else
-       (lengthInUnits * 0.01 if unitNumber == 5 else 0)))))
-       
-# Задача 5 - T
-# Функция: describe_age(age)
-# Возвращает возраст прописью с правильным склонением.
-describe_age = lambda age: f"{age} лет" if 11 <= age <= 14 else (
-    f"{age} год" if age % 10 == 1 else (
-        f"{age} года" if 2 <= age % 10 <= 4 else f"{age} лет"
-    )
-)
+
+def describe_number(n):
+    if n < 10:
+        length = "однозначное"
+    elif n < 100:
+        length = "двузначное"
+    else:
+        length = "трехзначное"
+
+    parity = "четное" if n % 2 == 0 else "нечетное"
+    return f"{parity} {length} число"
+
+
+def convert_to_meters(unit_number, length_in_units):
+    conversion_factors = {
+        1: 0.1,  # дециметр
+        2: 1000,  # километр
+        3: 1,  # метр
+        4: 0.001,  # миллиметр
+        5: 0.01  # сантиметр
+    }
+    return length_in_units * conversion_factors.get(unit_number, 0)
+
+
+def describe_age(age):
+    tens_map = {
+        20: "двадцать", 30: "тридцать", 40: "сорок", 50: "пятьдесят",
+        60: "шестьдесят", 70: "семьдесят", 80: "восемьдесят",
+        90: "девяносто", 100: "сто"
+    }
+    
+    ones_map = {
+        1: "один", 2: "два", 3: "три", 4: "четыре", 5: "пять",
+        6: "шесть", 7: "семь", 8: "восемь", 9: "девять"
+    }
+
+    if age in [11, 12, 13, 14] or age % 10 == 0:
+        suffix = "лет"
+    else:
+        suffix = {1: "год", 2: "года", 3: "года", 4: "года"}.get(age % 10, "лет")
+
+    if age <= 20 or age == 100:
+        word = tens_map.get(age, "")
+    else:
+        ten_part = (age // 10) * 10
+        one_part = age % 10
+        word = tens_map.get(ten_part, "")
+        if one_part:
+            word += " " + ones_map.get(one_part, "")
+
+    return f"{word} {suffix}"

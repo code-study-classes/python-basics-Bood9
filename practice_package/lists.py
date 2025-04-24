@@ -1,34 +1,37 @@
-# Задача 1: Квадраты нечётных чисел
-def square_odds(numbers):
-    return [x**2 for x in numbers if x % 2 != 0]
-
-# Задача 2: Нормализация имён
-def normalize_names(names):
-    return [name.capitalize() for name in names]
-
-# Задача 3: Фильтрация валидных email-адресов
-def remove_invalid_emails(emails):
-    return [email for email in emails if email.count('@') == 1 and len(email) >= 5 and email[0] != '@' and email[-1] != '@']
-
-# Задача 4: Фильтрация палиндромов
-def filter_palindromes(words):
-    return [word for word in words if word.lower() == word.lower()[::-1]]
-
-# Задача 5: Вычисление факториала
-def calculate_factorial(n):
-    if n == 0:
-        return 1
-    result = 1
-    for i in range(1, n + 1):
-        result *= i
+def square_odds(numbers_list):
+    result = []
+    for num in numbers_list:
+        if num % 2 != 0:
+            result.append(num ** 2)
     return result
 
-# Задача 6: Наибольший общий префикс
-def find_common_prefix(strings):
-    if not strings:
+
+def normalize_names(names_list):
+    return [name[0].upper() + name[1:].lower() for name in names_list]
+
+
+def remove_invalid_emails(email_list):
+    valid_emails = []
+    for email in email_list:
+        if email.count('@') == 1 and len(email) >= 5 and not email.startswith('@') and not email.endswith('@'):
+            valid_emails.append(email)
+    return valid_emails
+
+
+def filter_palindromes(words_list):
+    return [word for word in words_list if word.lower() == word.lower()[::-1]]
+
+
+def calculate_factorial(number):
+    from math import factorial
+    return factorial(number)
+
+
+def find_common_prefix(strings_list):
+    if not strings_list:
         return ""
-    prefix = strings[0]
-    for string in strings[1:]:
+    prefix = strings_list[0]
+    for string in strings_list[1:]:
         while not string.startswith(prefix):
             prefix = prefix[:-1]
             if not prefix:
