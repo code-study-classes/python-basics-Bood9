@@ -1,47 +1,51 @@
-# Задача 1 - L
-# Функция: extract_file_name(full_file_name)
-# Выделяет имя файла (без расширения) из полного пути.
-extract_file_name = lambda full_file_name: full_file_name.split('/')[-1].split('.')[0]
+# 1. Извлечение имени файла
+def extract_file_name(path: str) -> str:
+    base = path.split('/')[-1]  # Извлекаем имя файла
+    return base[1:].split('.')[0] if base.startswith('.') and '.' in base[1:] else base.split('.')[0]
 
-# Задача 2
-# Функция: encrypt_sentence(sentence)
-# Шифрует строку, помещая символы на четных позициях в начало, а на нечетных - в конец в обратном порядке.
-def encrypt_sentence(sentence):
-    even_chars = sentence[::2]
-    odd_chars = sentence[1::2]
-    return even_chars + odd_chars[::-1]
+# 2. Шифрование предложения
+def encrypt_sentence(sentence: str) -> str:
+    chars = list(sentence)
+    result = [''] * len(chars)
+    left, right = 0, len(chars) - 1
+    turn = True
+    for ch in chars:
+        if ch.isalpha():
+            if turn:
+                result[left] = ch
+                left += 1
+            else:
+                result[right] = ch
+                right -= 1
+            turn = not turn
+        else:
+            result[left] = ch
+            left += 1
+    return ''.join(result)
 
-# Задача 3
-# Функция: check_brackets(expression)
-# Проверяет правильность расстановки круглых скобок в строке.
-def check_brackets(expression):
+# 3. Проверка скобок
+def check_brackets(expression: str) -> int:
     stack = []
-    for i, char in enumerate(expression):
-        if char == '(':
+    for i, ch in enumerate(expression):
+        if ch == '(':
             stack.append(i)
-        elif char == ')':
+        elif ch == ')':
             if not stack:
                 return i
             stack.pop()
     return 0 if not stack else -1
 
-# Задача 4
-# Функция: reverse_domain(domain)
-# Переворачивает доменное имя (разделенное точками).
-def reverse_domain(domain):
-    parts = domain.split('.')
-    return '.'.join(parts[::-1])
+# 4. Реверс домена
+def reverse_domain(domain: str) -> str:
+    return '.'.join(domain.split('.')[::-1])
 
-# Задача 5
-# Функция: count_vowel_groups(word)
-# Считает группы подряд идущих гласных букв.
-def count_vowel_groups(word):
-    vowels = 'aeiouy'
-    word = word.lower()
+# 5. Подсчет групп гласных
+def count_vowel_groups(word: str) -> int:
+    vowels = "aeiouyAEIOUY"
     groups = 0
     in_group = False
-    for char in word:
-        if char in vowels:
+    for ch in word:
+        if ch in vowels:
             if not in_group:
                 groups += 1
                 in_group = True

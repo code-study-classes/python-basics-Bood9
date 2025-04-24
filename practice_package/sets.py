@@ -8,13 +8,11 @@ def is_superset(set_a, set_b):
 
 # Задача 3: Удаление дубликатов из списка
 def remove_duplicates(items):
-    seen = set()
-    return [x for x in items if not (x in seen or seen.add(x))]
+    return [x for i, x in enumerate(items) if x not in items[:i]]
 
 # Задача 4: Подсчёт уникальных слов в тексте
 def count_unique_words(text):
-    words = text.lower().split()
-    return len(set(words))
+    return len(set(text.lower().split()))
 
 # Задача 5: Пересечение всех переданных множеств
 def find_shared_items(*sets):
